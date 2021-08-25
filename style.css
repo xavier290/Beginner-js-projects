@@ -1,0 +1,100 @@
+@import url("https://fonts.googleapis.com/css2?family=Hina+Mincho&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.container {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 1%;
+}
+
+.container p {
+  font-family: "Hina Mincho", serif;
+  font-size: 28px;
+  font-weight: bolder;
+  margin-bottom: 10px;
+}
+
+.container button {
+  background: transparent;
+  color: #000;
+  border: 3px solid #000;
+  font: 24px "Hina Mincho", sans-serif;
+  cursor: pointer;
+  padding: 0.4rem 1rem;
+  transition: 0.2s ease-in-out;
+  letter-spacing: 2px;
+  font-weight: bolder;
+}
+
+.btn {
+  animation: movement 4s infinite;
+}
+
+.btn:hover,
+.btn:focus {
+  animation: pulse 0.5s infinite;
+}
+
+@keyframes movement {
+  5%,
+  50% {
+    transform: scale(1);
+  }
+  10% {
+    transform: scale(0.9);
+  }
+  15% {
+    transform: scale(1.15);
+  }
+  20% {
+    transform: scale(1.15) rotate(-5deg);
+  }
+  25% {
+    transform: scale(1.15) rotate(5deg);
+  }
+  30% {
+    transform: scale(1.15) rotate(-3deg);
+  }
+  35% {
+    transform: scale(1.15) rotate(2deg);
+  }
+  40% {
+    transform: scale(1.15) rotate(0);
+  }
+}
+
+@keyframes pulse {
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+@media all and (min-width: 768px) {
+  .container p {
+    font-size: 50px;
+  }
+  .container button {
+    font-size: 28px;
+    padding: 0.6rem 1.2rem;
+  }
+}
+
+@media all and (min-width: 1100px) {
+  .container p {
+    font-size: 68px;
+  }
+  .container button {
+    font-size: 30px;
+    padding: 0.8rem 1.4rem;
+  }
+}
