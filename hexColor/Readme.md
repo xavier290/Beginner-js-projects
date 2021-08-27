@@ -15,7 +15,7 @@ Okay, let's go to the point, in this project we have two main things that i will
 
 # and our Js file:
 
-   where this is the place where all of the logic is saved in order to have the app working
+where this is the place where all of the logic is saved in order to have the app working
 
    <img src="images/Screenshot%20(267).png">
    
@@ -26,9 +26,11 @@ Okay, let's go to the point, in this project we have two main things that i will
 
 Here it comes the most relevant part of the code where with a "for loop" we basically generate a random number and with that number selects a value from the "hexValue" array for up to 6 times to generate a color and put it as a background. okay, but how? it's actually pretty easy, let me explain:
 
-First we have this line of code: "random_index = Math.floor(Math.random() * hexValues.length);" where we are generating a random integer from 0 to 15, but why 15?
+First we have this line of code: "random_index = Math.floor(Math.random() \* hexValues.length);" where we are generating a random integer from 0 to 15, but why 15?
 since we are using the length property, we are getting the number 16 since that's the "lenght" of our array of strings, so we are telling the computer to generate a random number from 0 to 15, and since this is inside the Math.floor() which is a function that returns the largest integer value that is less than or equal to a number. In other words, the floor() function rounds a number down and returns an integer value, in that way we will alway be getting random numbers with no decimals, and that number will be saved into the "random_index" variable.
 
 once with do that, we add that number up in the "hexCode1" variable until the 6 numbers are completed, which is the amount of times the process repeat itself.
 
-And finally, that "hexCode" value is set as a background color due the following line of code: document.body.style.background = `linear-gradient(to right, #${hexCode1}, #${hexCode2})`;
+And finally, that "hexCode" value is set as a background color due the following line of code: `document.body.style.background = linear-gradient(to right, #${hexCode1}, #${hexCode2})`, besides that i also added some styling to make the page look better.
+
+So, that's it :), i need to say that i did my best trying to explain what i did here, any suggestions are more than welcome.
