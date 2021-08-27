@@ -1,0 +1,105 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+
+* {
+  margin: 0%;
+  padding: 0%;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 100vh;
+  padding: 2%;
+  background: #7d1935;
+  color: #fff;
+  position: relative;
+  justify-content: center;
+}
+
+.menu {
+  width: 92%;
+  position: absolute;
+  top: 2%;
+  left: 2%;
+  display: grid;
+  grid-template-columns: 60% 40%;
+  place-items: center;
+  z-index: 4;
+}
+
+.title {
+  display: block;
+  width: 100%;
+}
+
+.menu-btn {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  transition: all 0.4s ease-in-out;
+  right: 6%;
+  z-index: 10;
+  transform: translateX(20px);
+}
+
+.menu-btn-burguer {
+  width: 34px;
+  height: 5px;
+  background: #fff;
+  border-radius: 5px;
+}
+
+.menu-btn-burguer::before,
+.menu-btn-burguer::after {
+  content: "";
+  position: absolute;
+  width: 36px;
+  height: 5px;
+  border-radius: 5px;
+  background: #fff;
+  transition: all 0.4s ease-in-out;
+}
+
+.menu-btn-burguer::before {
+  transform: translateY(-8px);
+}
+
+.menu-btn-burguer::after {
+  transform: translateY(8px);
+}
+
+.menu-btn.open .menu-btn-burguer {
+  background: transparent;
+}
+
+.menu-btn.open .menu-btn-burguer::before {
+  transform: rotate(45deg);
+}
+
+.menu-btn.open .menu-btn-burguer::after {
+  transform: rotate(-45deg);
+}
+
+.content {
+  width: 100%;
+}
+
+.container h1 {
+  font-size: 28px;
+}
+
+.container h2 {
+  font-size: 20px;
+}
+
+.container p {
+  font-size: 16px;
+  margin-bottom: 8px;
+}
