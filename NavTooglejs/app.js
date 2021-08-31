@@ -1,16 +1,18 @@
-const menuBtn = document.querySelector(".menu-btn");
-const MenuActive = document.querySelector(".navbar");
+const menuActive = document.querySelector(".menu-btn");
+const effect = document.querySelectorAll(".one, .two, .navbar, .menu-btn");
 
 let menuOpen = false;
 
-menuBtn.addEventListener("click", () => {
+menuActive.addEventListener("click", () => {
   if (!menuOpen) {
-    menuBtn.classList.add("open");
-    MenuActive.classList.add("active");
+    for (let j = 0; j < 4; j++) {
+      effect[j].classList.add("active");
+    }
     menuOpen = true;
   } else {
-    menuBtn.classList.remove("open");
-    MenuActive.classList.remove("active");
+    for (let j = 0; j < 4; j++) {
+      effect[j].classList.remove("active");
+    }
     menuOpen = false;
   }
 });
