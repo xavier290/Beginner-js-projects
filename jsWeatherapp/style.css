@@ -210,7 +210,8 @@ main {
   background: #63458130;
   margin-bottom: 4px;
   border-radius: 5px;
-  display: flex;
+  display: grid;
+  grid-template-columns: 95% 5%;
   align-items: center;
   font-weight: bolder;
   padding: 1%;
@@ -224,6 +225,10 @@ main {
 
 .more-cities .card:focus {
   outline-color: #3b185f;
+}
+
+.card.open {
+  height: 20vh;
 }
 
 /* animations */

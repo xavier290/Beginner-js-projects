@@ -98,11 +98,49 @@ function cardsTitle(response) {
   const cards = document.querySelectorAll(".card");
 
   for (i = 0; i < 3; i++) {
-    cards[i].innerHTML = Allnames[i];
+    cards[i].innerHTML = Allnames[i] + `<img src="icons/arrow.svg">`;
+  }
+}
+
+let open = false;
+
+function openingInfoCard() {
+  if (!open) {
+    this.classList.add("open");
+    open = true;
+  } else {
+    this.classList.remove("open");
+    open = false;
+  }
+}
+
+function gettingInfo(response) {
+  let tempInfo = [];
+  let DescriptionInfo = [];
+  let humidityInfo = [];
+  let pressInfo = [];
+
+  for (i = 1; i < 4; i++) {
+    const infT = `${response.list[i].main.temp}`;
+    tempInfo.push(infT);
+
+    const infD = `${response.list[i].weather.description}`;
+    DescriptionInfo.push(infD);
+
+    const infH = `${response.list[i].main.humidity}`;
+    humidityInfo.push(infH);
+
+    const infP = `${response.list[i].main.pressure}`;
+    pressInfo.push(infP);
   }
 }
 
 function weatherInCitiesNearU(response) {
   createCards();
   cardsTitle(response);
+  console.log(response);
+  const cards = document.querySelectorAll(".card");
+  cards.forEach((card) => card.addEventListener("click", openingInfoCard));
+
+  gettingInfo(response);
 }
