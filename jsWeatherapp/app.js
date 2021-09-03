@@ -17,6 +17,8 @@ const api = {
 
 const locationIcon = document.querySelector(".weather-icon");
 
+const grid = document.querySelector(".more-cities");
+
 menuActive[0].addEventListener("click", () => {
   if (!active) {
     menuActive[0].classList.add("active");
@@ -43,9 +45,7 @@ window.addEventListener("load", () => {
         .then((response) => {
           return response.json();
         })
-        .then((data) => {
-          console.log(data);
-        });
+        .then(weatherInCitiesNearU);
     });
   }
 });
@@ -72,4 +72,37 @@ function passingData(weather) {
 
   const { speed } = weather.wind;
   wind.textContent = speed + " mt/s";
+}
+
+function createCards() {
+  for (let i = 0; i < 3; i++) {
+    const elements = document.createElement("div");
+    grid.appendChild(elements);
+  }
+
+  const cards = document.querySelectorAll(".more-cities div");
+  cards.forEach((card) => {
+    card.classList.add("card");
+  });
+}
+
+function cardsTitle(response) {
+  let Allnames = [];
+
+  for (i = 1; i < 4; i++) {
+    const name = `${response.list[i].name}`;
+
+    Allnames.push(name);
+  }
+
+  const cards = document.querySelectorAll(".card");
+
+  for (i = 0; i < 3; i++) {
+    cards[i].innerHTML = Allnames[i];
+  }
+}
+
+function weatherInCitiesNearU(response) {
+  createCards();
+  cardsTitle(response);
 }

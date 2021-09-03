@@ -29,7 +29,7 @@ header {
 .title {
   width: 70px;
   height: 8vh;
-  background: #ffffff94;
+  background: #ffffff3f;
   display: flex;
   align-items: flex-end;
   justify-content: center;
@@ -37,6 +37,7 @@ header {
   position: absolute;
   bottom: 2%;
   right: 2%;
+  border-radius: 6px;
 }
 
 .title h1 {
@@ -194,9 +195,35 @@ main {
 }
 
 .more-cities {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   width: 100%;
   height: fit-content;
   padding: 1%;
+}
+
+.more-cities .card {
+  width: 98%;
+  height: 6vh;
+  background: #63458130;
+  margin-bottom: 4px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  font-weight: bolder;
+  padding: 1%;
+  cursor: pointer;
+  transition: all 0.6s;
+}
+
+.more-cities .card:hover {
+  transform: scale(1.02);
+}
+
+.more-cities .card:focus {
+  outline-color: #3b185f;
 }
 
 /* animations */
