@@ -4,6 +4,7 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+  font-family: "Montserrat", sans-serif;
 }
 
 body {
@@ -14,25 +15,28 @@ body {
 }
 
 header {
-  font-family: "Montserrat", sans-serif;
   width: 100%;
   height: fit-content;
   display: grid;
-  grid-template-columns: 30% 53% 17%;
+  grid-template-columns: 80% 20%;
   justify-content: center;
   align-items: center;
   padding: 1%;
   z-index: 10;
+  position: relative;
 }
 
-header .title {
+.title {
   width: 70px;
   height: 8vh;
   background: #ffffff94;
   display: flex;
   align-items: flex-end;
+  justify-content: center;
   color: #3b185f;
-  padding: 2%;
+  position: absolute;
+  bottom: 2%;
+  right: 2%;
 }
 
 .title h1 {
@@ -60,8 +64,8 @@ header input:focus {
   height: 30px;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
-  right: 6%;
-  transform: translateX(5px);
+  position: absolute;
+  right: 2%;
 }
 
 .menu-btn-burguer {
@@ -105,13 +109,15 @@ header input:focus {
 }
 
 main {
-  height: 90vh;
+  height: fit-content;
   width: 100%;
   padding: 1%;
 }
 
 .location {
-  font-family: "Montserrat", sans-serif;
+  background: #63458130;
+  padding: 1%;
+  border-radius: 6px;
 }
 
 .location .city {
@@ -124,6 +130,73 @@ main {
   font-size: 20px;
   font-weight: bold;
   text-align: center;
+}
+
+.details {
+  background: #63458130;
+  padding: 1%;
+  margin-top: 5px;
+  border-radius: 6px;
+}
+
+.weather-icon {
+  height: fit-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1%;
+}
+
+.temp {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.temp .current {
+  font-size: 52px;
+}
+
+.temp .temp-symbol {
+  font-size: 48px;
+}
+
+.temp .description {
+  font-size: 20px;
+  margin-left: 10px;
+}
+
+.more-details {
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  font-size: 22px;
+}
+
+.more-details div:first-child {
+  margin-bottom: 5px;
+  display: grid;
+  grid-template-columns: 80% 10% 10%;
+  border-top: solid 1px #3c185f3b;
+}
+
+.more-details div {
+  margin-bottom: 5px;
+  display: grid;
+  grid-template-columns: 60% 40%;
+  border-bottom: solid 1px #3c185f3b;
+}
+
+.more-details span {
+  font-size: 18px;
+  text-align: right;
+}
+
+.more-cities {
+  width: 100%;
+  height: fit-content;
+  padding: 1%;
 }
 
 /* animations */

@@ -12,14 +12,14 @@
 <body>
     <section>
         <header>
-            <div class="title">
-                <h1>The <br> weather</h1>
-            </div>
             <input type="text" autocomplete="off" class="search-box" placeholder="Search for a city...">
             <div class="menu-btn">
                 <div class="menu-btn-burguer"></div>
             </div>
         </header>
+        <div class="title">
+            <h1>The <br> weather</h1>
+        </div>
     </section>
     <main>
         <section class="location">
@@ -28,24 +28,24 @@
         </section>
         <section class="weather">
             <div class="details">
-                <div class="icon"></div>
+                <div class="weather-icon"><img src="icons/unknown.png" /></div>
                 <div class="temp">
                     <div class="current">27</div>
                     <span class="temp-symbol">°C</span>
+                    <div class="description">Clear</div>
                 </div>
-
-                <div class="feels-like">30</div>
-                <span class="temp-symbol">°C</span>
-                <div class="wind">7</div>
-                <span>km/h</span>
-                <div class="humidity">82</div>
-                <span>%</span>
-                <div class="pressure">1011</div>
-                <span>mbar</span>
+                <div class="more-details">
+                    <div>Feels like: <span class="feels-like"></span><span class="temp-symbol">°C</span></div>
+                    <div>Wind: <span class="wind"></span></div>
+                    <div>Humidity: <span class="humidity"></span></div>
+                    <div>Pressure: <span class="pressure"></span></div>
+                </div>
             </div>
         </section>
     </main>
-    <script src="app.js"></script>
+    <section class="more-cities">
+        <h1>Cities near You:</h1>
+    </section>
 </body>
 
 </html>
