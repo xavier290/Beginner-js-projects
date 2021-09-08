@@ -23,22 +23,27 @@
     </section>
     <main>
         <section class="location">
-            <div class="city">Managua, Nicaragua</div>
-            <div class="date">Wednesday 01</div>
+            <div class="city"></div>
+            <div class="date"></div>
         </section>
         <section class="weather">
+            <div class="no-available">
+                <img src="icons/unknown.png" alt="weather icon">
+                <p>something went wrong, looks like we cannot get your current location, try looking for a city</p>
+                <input type="text" autocomplete="off" class="search-box" placeholder="Search for a city">
+            </div>
             <div class="details">
                 <div class="weather-icon"><img src="icons/unknown.png" /></div>
                 <div class="temp">
-                    <div class="current">27</div>
-                    <span class="temp-symbol">°C</span>
-                    <div class="description">Clear</div>
+                    <div class="current"></div>
+                    <span class="temp-symbol"></span>
+                    <div class="description"></div>
                 </div>
                 <div class="more-details">
-                    <div>Feels like: <span class="feels-like"></span><span class="temp-symbol">°C</span></div>
-                    <div>Wind: <span class="wind"></span></div>
-                    <div>Humidity: <span class="humidity"></span></div>
-                    <div>Pressure: <span class="pressure"></span></div>
+                    <div>Feels like:<span class="feels-like"></span><span class="temp-symbol">°C</span></div>
+                    <div>Wind:<span class="wind"></span></div>
+                    <div>Humidity:<span class="humidity"></span></div>
+                    <div>Pressure:<span class="pressure"></span></div>
                 </div>
             </div>
         </section>

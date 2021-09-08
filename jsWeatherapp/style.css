@@ -44,7 +44,7 @@ header {
   font-size: 1em;
 }
 
-header input {
+input {
   background: #fff;
   border: none;
   height: 5vh;
@@ -53,7 +53,7 @@ header input {
   color: #000;
 }
 
-header input:focus {
+input:focus {
   outline-color: #634581;
 }
 
@@ -110,12 +110,17 @@ header input:focus {
 }
 
 main {
-  height: fit-content;
+  height: 70vh;
   width: 100%;
   padding: 1%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .location {
+  width: 100%;
   background: #63458130;
   padding: 1%;
   border-radius: 6px;
@@ -133,7 +138,12 @@ main {
   text-align: center;
 }
 
+.weather {
+  width: 100%;
+}
+
 .details {
+  width: 100%;
   background: #63458130;
   padding: 1%;
   margin-top: 5px;
@@ -206,7 +216,7 @@ main {
 
 .more-cities .card {
   width: 98%;
-  height: 6vh;
+  height: 4.5vh;
   background: #63458130;
   margin-bottom: 4px;
   border-radius: 5px;
@@ -217,6 +227,7 @@ main {
   padding: 1%;
   cursor: pointer;
   transition: all 0.6s;
+  overflow: hidden;
 }
 
 .more-cities .card:hover {
@@ -228,7 +239,36 @@ main {
 }
 
 .card.open {
-  height: 20vh;
+  height: 10vh;
+}
+
+.card .data {
+  display: flex;
+  flex-direction: column;
+  margin-top: 2.4vh;
+}
+
+.no-available {
+  display: none;
+}
+
+.no-available.open {
+  position: fixed;
+  width: 100%;
+  min-height: 100vh;
+  background: #634581;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  top: 0%;
+  left: 0%;
+  z-index: 20;
+}
+
+.no-available p {
+  font-size: 22px;
 }
 
 /* animations */

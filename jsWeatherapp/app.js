@@ -31,26 +31,61 @@ menuActive[0].addEventListener("click", () => {
 
 window.addEventListener("load", () => {
   if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition((position) => {
-      long = position.coords.longitude;
-      lat = position.coords.latitude;
-
-      fetch(`${api.base}weather?lat=${lat}&lon=${long}&appid=${api.key}`)
-        .then((weather) => {
-          return weather.json();
-        })
-        .then(passingData);
-
-      fetch(`${api.base}find?lat=${lat}&lon=${long}&cnt=4&appid=${api.key}`)
-        .then((response) => {
-          return response.json();
-        })
-        .then(weatherInCitiesNearU);
-    });
+    navigator.geolocation.getCurrentPosition(
+      geo_success,
+      geo_error,
+      geo_options
+    );
+  } else {
+    alert("Sorry, looks like geo-location is not available");
   }
 });
 
+function geo_success(position) {
+  long = position.coords.longitude;
+  lat = position.coords.latitude;
+
+  fetch(`${api.base}weather?lat=${lat}&lon=${long}&appid=${api.key}`)
+    .then((weather) => {
+      return weather.json();
+    })
+    .then(passingData);
+
+  fetch(`${api.base}find?lat=${lat}&lon=${long}&cnt=4&appid=${api.key}`)
+    .then((response) => {
+      return response.json();
+    })
+    .then(weatherInCitiesNearU);
+}
+
+function geo_error() {
+  const message = document.querySelector(".no-available");
+  let show = false;
+
+  if (!show) {
+    message.classList.add("open");
+    show = true;
+  } else {
+    message.classList.remove("open");
+    show = false;
+  }
+  alert("Sorry, no position available.");
+}
+
+var geo_options = {
+  enableHighAccuracy: true,
+  maximumAge: 30000,
+  timeout: 27000,
+};
+
+function theDate() {
+  let now = new Date();
+  let date = document.querySelector(".location .date");
+  date.innerText = dateBuilder(now);
+}
+
 function passingData(weather) {
+  theDate();
   const name = `${weather.name}`;
   const country = `${weather.sys.country}`;
   city.textContent = name + ", " + country;
@@ -75,7 +110,7 @@ function passingData(weather) {
 }
 
 function createCards() {
-  for (let i = 0; i < 3; i++) {
+  for (let i = 0; i < 2; i++) {
     const elements = document.createElement("div");
     grid.appendChild(elements);
   }
@@ -89,7 +124,7 @@ function createCards() {
 function cardsTitle(response) {
   let Allnames = [];
 
-  for (i = 1; i < 4; i++) {
+  for (i = 1; i < 3; i++) {
     const name = `${response.list[i].name}`;
 
     Allnames.push(name);
@@ -97,7 +132,7 @@ function cardsTitle(response) {
 
   const cards = document.querySelectorAll(".card");
 
-  for (i = 0; i < 3; i++) {
+  for (i = 0; i < 2; i++) {
     cards[i].innerHTML = Allnames[i] + `<img src="icons/arrow.svg">`;
   }
 }
@@ -115,32 +150,78 @@ function openingInfoCard() {
 }
 
 function gettingInfo(response) {
-  let tempInfo = [];
+  placingDataContainers();
+
+  let TempInfo = [];
   let DescriptionInfo = [];
-  let humidityInfo = [];
-  let pressInfo = [];
 
-  for (i = 1; i < 4; i++) {
+  for (let i = 1; i < 3; i++) {
     const infT = `${response.list[i].main.temp}`;
-    tempInfo.push(infT);
+    let temp = Math.round(infT - 273);
+    TempInfo.push(temp);
 
-    const infD = `${response.list[i].weather.description}`;
+    const infD = `${response.list[i].weather[0].description}`;
     DescriptionInfo.push(infD);
-
-    const infH = `${response.list[i].main.humidity}`;
-    humidityInfo.push(infH);
-
-    const infP = `${response.list[i].main.pressure}`;
-    pressInfo.push(infP);
   }
+
+  const Data = document.querySelectorAll(".data");
+
+  for (let j = 0; j < 2; j++) {
+    Data[j].innerHTML = TempInfo[j] + "°C " + DescriptionInfo[j];
+  }
+}
+
+function placingDataContainers() {
+  const cards = document.querySelectorAll(".card");
+  for (let j = 0; j < 1; j++) {
+    for (let i = 0; i < 2; i++) {
+      const elements = document.createElement("div");
+      cards[i].appendChild(elements);
+    }
+  }
+  const info = document.querySelectorAll(".card div");
+  info.forEach((data) => {
+    data.classList.add("data");
+  });
 }
 
 function weatherInCitiesNearU(response) {
   createCards();
   cardsTitle(response);
-  console.log(response);
   const cards = document.querySelectorAll(".card");
   cards.forEach((card) => card.addEventListener("click", openingInfoCard));
-
   gettingInfo(response);
+}
+
+function dateBuilder(d) {
+  let months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+  let days = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
+
+  let day = days[d.getDay()];
+  let date = d.getDate();
+  let month = months[d.getMonth()];
+  let year = d.getFullYear();
+
+  return `${day} ${date} ${month} ${year}`;
 }
