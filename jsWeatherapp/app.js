@@ -1,5 +1,3 @@
-menuActive = document.querySelectorAll(".menu-btn");
-
 const city = document.querySelector(".city");
 const tempA = document.querySelector(".current");
 const Description = document.querySelector(".description");
@@ -16,22 +14,6 @@ const api = {
 const locationIcon = document.querySelector(".weather-icon")
 
 const grid = document.querySelector(".more-cities")
-let active = false
-
-menuActive[0].addEventListener("click", () => {
-  const menu = document.querySelector(".menu")
-
-  if (!active) {
-    menuActive[0].classList.add("active")
-    menu.classList.add("opened")
-    active = true;
-
-  } else {
-    active = false
-    menuActive[0].classList.remove("active")
-    menu.classList.remove("opened")
-  }
-});
 
 window.addEventListener("load", () => {
   if (navigator.geolocation) {

@@ -12,6 +12,15 @@ body {
   min-height: 100vh;
   background: #bfa2db;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+section {
+  width: 100%;
+  max-width: 450px;
 }
 
 header {
@@ -57,69 +66,10 @@ input:focus {
   outline-color: #634581;
 }
 
-.menu-btn {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 34px;
-  height: 30px;
-  cursor: pointer;
-  transition: all 0.3s ease-in-out;
-  position: absolute;
-  right: 2%;
-}
-
-.menu-btn-burguer {
-  width: 30px;
-  height: 5px;
-  background: #ffffffdc;
-  border-radius: 5px;
-}
-
-.menu-btn-burguer::before,
-.menu-btn-burguer::after {
-  content: "";
-  position: absolute;
-  width: 34px;
-  height: 5px;
-  border-radius: 5px;
-  background: #ffffffdc;
-  transition: all 0.3s ease-in-out;
-}
-
-.menu-btn-burguer::before {
-  transform: translateY(-8px);
-}
-
-.menu-btn-burguer::after {
-  transform: translateY(8px);
-}
-
-.menu-btn.active .menu-btn-burguer {
-  background: transparent;
-}
-
-.menu-btn.active .menu-btn-burguer::before {
-  animation: movementT 0.4s;
-  transform: rotate(45deg);
-}
-
-.menu-btn.active .menu-btn-burguer::after {
-  animation: movementB 0.4s;
-  transform: rotate(-45deg);
-}
-
 .menu {
-  height: 0vh;
   overflow: hidden;
-  transition: all 0.2s ease-in;
-  white-space: nowrap;
-}
-
-.menu.opened {
   width: 98%;
   height: fit-content;
-  background-color: #af8ece;
   margin-left: 1%;
   margin-top: 5%;
   padding: 1%;
@@ -229,6 +179,8 @@ main {
 }
 
 .location {
+  display: flex;
+  flex-direction: column;
   width: 100%;
   background: #63458130;
   padding: 1%;
@@ -320,7 +272,6 @@ main {
   align-items: center;
   width: 100%;
   height: fit-content;
-  padding: 1%;
 }
 
 .more-cities .card {
@@ -450,5 +401,54 @@ main {
   }
   100% {
     transform: rotate(-45deg);
+  }
+}
+
+@media all and (min-width: 450px) {
+  .menu {
+    margin-left: 32px;
+  }
+}
+
+@media all and (min-width: 700px) {
+  section {
+    max-width: 600px;
+  }
+  header {
+    margin-bottom: 5%;
+    padding: 0;
+  }
+  .menu {
+    margin-left: 50px;
+  }
+  .weather-icon img {
+    width: 140px;
+  }
+  .location .city {
+    font-size: 32px !important;
+  }
+  .location .date {
+    font-size: 28px !important;
+  }
+  .temp .current {
+    font-size: 48px;
+  }
+  .temp .description {
+    font-size: 28px;
+  }
+  .more-details {
+    font-size: 22px;
+  }
+  .more-details span {
+    font-size: 20px;
+  }
+  .more-cities .card {
+    width: 100%;
+  }
+  .more-cities div {
+    font-size: 18px;
+  }
+  .more-cities .data {
+    margin-top: 8px;
   }
 }
