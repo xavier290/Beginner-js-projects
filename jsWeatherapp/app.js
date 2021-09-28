@@ -58,8 +58,9 @@ function geo_success(position) {
     .then(weatherInCitiesNearU);
 }
 
+const message = document.querySelector(".no-available");
+
 function geo_error() {
-  const message = document.querySelector(".no-available");
   let show = false;
 
   if (!show) {
@@ -69,6 +70,7 @@ function geo_error() {
     message.classList.remove("open");
     show = false;
   }
+
   alert("Sorry, no position available.");
 }
 
@@ -224,4 +226,56 @@ function dateBuilder(d) {
   let year = d.getFullYear();
 
   return `${day} ${date} ${month} ${year}`;
+}
+
+
+const searchbox = document.querySelector(".search-box")
+
+searchbox.addEventListener("keypress", (evt) => {
+  if (evt.keyCode == 13) {
+    getResults(searchbox.value);
+    message.classList.remove("open");
+    show = false;
+
+    const text = document.querySelector(".more-cities h1")
+    const cardsText = document.querySelectorAll(".card")
+    
+    grid.removeChild(text);
+    for(let i = 0; i<2; i++) {
+      grid.removeChild(cardsText[i]);
+    }
+  }
+});
+
+function getResults(query) {
+	fetch(`${api.base}weather?q=${query}&units=metric&appid=${api.key}`)
+		.then((results) => {
+			return results.json();
+		})
+		.then(displayResults);
+}
+
+function displayResults(weather) {
+  theDate()
+  const name = `${weather.name}`;
+  const country = `${weather.sys.country}`;
+  city.textContent = name + ", " + country;
+
+  const { temp, feels_like, humidity, pressure } = weather.main;
+  let temperature = Math.round(temp);
+  let feels = Math.round(feels_like);
+
+  tempA.textContent = temperature;
+  feelsLike.textContent = feels;
+  Humidity.textContent = humidity + " %";
+  Pressure.textContent = pressure + " hpa";
+
+  const { id, description } = weather.weather[0];
+  Description.textContent = description;
+
+  const { icon } = weather.weather[0];
+  locationIcon.innerHTML = `<img src="icons/${icon}.png">`;
+
+  const { speed } = weather.wind;
+  wind.textContent = speed + " mt/s";
 }

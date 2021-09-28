@@ -21,22 +21,21 @@
             <h1>The <br> weather</h1>
         </div>
     </section>
+    <div class="no-available">
+        <img src="icons/unknown.png" alt="weather icon">
+        <p>something went wrong, looks like we cannot get your current location, try looking for a city</p>
+    </div>
     <main>
         <section class="location">
             <div class="city"></div>
             <div class="date"></div>
         </section>
         <section class="weather">
-            <div class="no-available">
-                <img src="icons/unknown.png" alt="weather icon">
-                <p>something went wrong, looks like we cannot get your current location, try looking for a city</p>
-                <input type="text" autocomplete="off" class="search-box" placeholder="Search for a city">
-            </div>
             <div class="details">
                 <div class="weather-icon"><img src="icons/unknown.png" /></div>
                 <div class="temp">
                     <div class="current"></div>
-                    <span class="temp-symbol"></span>
+                    <span class="temp-symbol">°C</span>
                     <div class="description"></div>
                 </div>
                 <div class="more-details">

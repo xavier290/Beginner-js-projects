@@ -166,7 +166,7 @@ main {
 }
 
 .temp .current {
-  font-size: 52px;
+  font-size: 40px;
 }
 
 .temp .temp-symbol {
@@ -264,7 +264,6 @@ main {
   text-align: center;
   top: 0%;
   left: 0%;
-  z-index: 20;
 }
 
 .no-available p {
