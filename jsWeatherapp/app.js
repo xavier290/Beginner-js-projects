@@ -8,24 +8,28 @@ const wind = document.querySelector(".wind");
 const Humidity = document.querySelector(".humidity");
 const Pressure = document.querySelector(".pressure");
 
-let active = false;
-
 const api = {
   key: "6dc03e881dc8b962bc1a29daeb884c5b",
   base: "https://api.openweathermap.org/data/2.5/",
 };
 
-const locationIcon = document.querySelector(".weather-icon");
+const locationIcon = document.querySelector(".weather-icon")
 
-const grid = document.querySelector(".more-cities");
+const grid = document.querySelector(".more-cities")
+let active = false
 
 menuActive[0].addEventListener("click", () => {
+  const menu = document.querySelector(".menu")
+
   if (!active) {
-    menuActive[0].classList.add("active");
+    menuActive[0].classList.add("active")
+    menu.classList.add("opened")
     active = true;
+
   } else {
-    active = false;
-    menuActive[0].classList.remove("active");
+    active = false
+    menuActive[0].classList.remove("active")
+    menu.classList.remove("opened")
   }
 });
 
@@ -239,7 +243,7 @@ searchbox.addEventListener("keypress", (evt) => {
 
     const text = document.querySelector(".more-cities h1")
     const cardsText = document.querySelectorAll(".card")
-    
+
     grid.removeChild(text);
     for(let i = 0; i<2; i++) {
       grid.removeChild(cardsText[i]);
@@ -270,7 +274,7 @@ function displayResults(weather) {
   Humidity.textContent = humidity + " %";
   Pressure.textContent = pressure + " hpa";
 
-  const { id, description } = weather.weather[0];
+  const { description } = weather.weather[0];
   Description.textContent = description;
 
   const { icon } = weather.weather[0];
@@ -278,4 +282,44 @@ function displayResults(weather) {
 
   const { speed } = weather.wind;
   wind.textContent = speed + " mt/s";
+}
+
+const tempMetric = document.querySelector(".toggle-item")
+let fahrenheit = false;
+
+tempMetric.addEventListener("click", () => {
+  let valueTemp = tempA.textContent
+  let feelsvalue = feelsLike.textContent
+
+  if (!fahrenheit) {
+    tempConverterCtoF(valueTemp, feelsvalue)
+    changingTempSymbol()
+    fahrenheit = true
+  } else {
+    tempConverterFtoC(valueTemp, feelsvalue)
+    changingTempSymbol()
+    fahrenheit = false
+  }
+})
+
+function tempConverterCtoF(valueTemp, feelsvalue) {
+  document.querySelector(".current").innerHTML=(valueTemp*9/5)+32;
+  document.querySelector(".feels-like").innerHTML=(feelsvalue*9/5)+32;
+}
+
+function tempConverterFtoC(valueTemp, feelsvalue) {
+  document.querySelector(".current").innerHTML=(valueTemp-32)*5/9;
+  document.querySelector(".feels-like").innerHTML=(feelsvalue-32)*5/9;
+}
+
+function changingTempSymbol() {
+  const tempSymbol = document.querySelectorAll(".temp-symbol")
+
+  for(let i=0; i<2; i++) {
+    if(tempSymbol[i].textContent == "°C") {
+      tempSymbol[i].textContent = "°F";
+    } else {
+      tempSymbol[i].textContent = "°C"
+    }
+  }
 }
