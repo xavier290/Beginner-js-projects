@@ -288,28 +288,37 @@ const tempMetric = document.querySelector(".toggle-item")
 let fahrenheit = false;
 
 tempMetric.addEventListener("click", () => {
-  let valueTemp = tempA.textContent
-  let feelsvalue = feelsLike.textContent
+  
+  let value1 = parseInt(tempA.textContent, 10)
+  let value2 = parseInt(feelsLike.textContent, 10)
 
   if (!fahrenheit) {
-    tempConverterCtoF(valueTemp, feelsvalue)
+    tempConverterCtoF(value1, value2)
     changingTempSymbol()
     fahrenheit = true
   } else {
-    tempConverterFtoC(valueTemp, feelsvalue)
+    tempConverterFtoC(value1, value2)
     changingTempSymbol()
     fahrenheit = false
   }
 })
 
 function tempConverterCtoF(valueTemp, feelsvalue) {
-  document.querySelector(".current").innerHTML=(valueTemp*9/5)+32;
-  document.querySelector(".feels-like").innerHTML=(feelsvalue*9/5)+32;
+  valueTemp = (valueTemp * 9/5) + 32
+  feelsvalue = (feelsvalue * 9/5) + 32
+  valueTemp.toFixed(2)
+  feelsvalue.toFixed(2)
+  tempA.textContent = valueTemp
+  feelsLike.textContent = feelsvalue
 }
 
 function tempConverterFtoC(valueTemp, feelsvalue) {
-  document.querySelector(".current").innerHTML=(valueTemp-32)*5/9;
-  document.querySelector(".feels-like").innerHTML=(feelsvalue-32)*5/9;
+  valueTemp = (valueTemp - 32) * 5/9
+  feelsvalue = (feelsvalue - 32) * 5/9;
+  valueTemp.toFixed(2) 
+  feelsvalue.toFixed(2) 
+  tempA.textContent = valueTemp
+  feelsLike.textContent = feelsvalue
 }
 
 function changingTempSymbol() {
