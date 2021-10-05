@@ -1,6 +1,7 @@
 const api = {
     key: "sVnX9NHXldDYvSO9i4jFg45LyL60u5003Y1RToOw",
-    base: "https://api.nasa.gov/planetary/apod",
+    base: "https://api.nasa.gov/",
+    snap: "planetary/apod",
 };
 
 const title = document.querySelector(".title")
@@ -21,7 +22,7 @@ menu.addEventListener("click", ()=> {
 })
 
 window.addEventListener("load", () => {
-    fetch(`${api.base}?api_key=${api.key}`)
+    fetch(`${api.base}${api.snap}?api_key=${api.key}`)
     .then((data) => {
         return data.json();
     })
