@@ -7,27 +7,22 @@ const api = {
 const title = document.querySelector(".title")
 const details = document.querySelector(".details")
 
-let show = false
-let active = false
-
 const menu = document.querySelector(".menu-btn")
-menu.addEventListener("click", ()=> {
-    if(!active) {
-        menu.classList.add("open")
-        active = true
-    } else {
-        menu.classList.remove("open")
-        active = false
-    }
+menu.addEventListener("click", function() {
+    this.classList.toggle('open')
 })
 
 window.addEventListener("load", () => {
+    fecthingData()
+})
+
+function fecthingData() {
     fetch(`${api.base}${api.snap}?api_key=${api.key}`)
     .then((data) => {
         return data.json();
     })
     .then(displayingData)
-})
+}
 
 function displayingData(data) {
     //console.log(data)
@@ -47,11 +42,5 @@ function displayingData(data) {
 
 const moreInfo = document.querySelector(".moreInfo")
 moreInfo.addEventListener("click", () => {
-    if (!show) {
-        details.classList.add("showing")
-        show = true
-    } else {
-        details.classList.remove("showing")
-        show = false
-    }
+    details.classList.toggle('showing')
 })
