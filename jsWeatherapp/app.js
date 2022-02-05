@@ -11,248 +11,76 @@ const api = {
   base: "https://api.openweathermap.org/data/2.5/",
 };
 
-const locationIcon = document.querySelector(".weather-icon")
-
-const grid = document.querySelector(".more-cities")
+const locationIcon = document.querySelector(".weather-icon");
+const grid = document.querySelector(".more-cities");
 
 window.addEventListener("load", () => {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(
-      geo_success,
-      geo_error,
-      geo_options
-    );
-  } else {
-    alert("Sorry, looks like geo-location is not available");
-  }
+  theDate();
+  if(!navigator.geolocation) return geoError(true);
+
+  navigator.geolocation.getCurrentPosition((position) => {
+    let lat = position.coords.latitude;
+    let long = position.coords.longitude;
+
+    geoSuccess(lat, long).then(data => {
+      passingData(data);
+
+      getMoreGeoData(lat, long).then(data => {
+          console.log(data);
+      })
+    })
+  }, () => {
+    geoError(false);
+  })
 });
 
-function geo_success(position) {
-  long = position.coords.longitude;
-  lat = position.coords.latitude;
+const geoSuccess = async(lat, long) => {
+  try {
+    let res = await fetch(`${api.base}weather?lat=${lat}&lon=${long}&units=metric&appid=${api.key}`);
+    let data = await res.json();
+    
+    return(data);
+  } 
+  catch (error) {
+    console.error(error);
+  }
+}
 
-  fetch(`${api.base}weather?lat=${lat}&lon=${long}&appid=${api.key}`)
-    .then((weather) => {
-      return weather.json();
-    })
-    .then(passingData);
-
-  fetch(`${api.base}find?lat=${lat}&lon=${long}&cnt=4&appid=${api.key}`)
-    .then((response) => {
-      return response.json();
-    })
-    .then(weatherInCitiesNearU);
+const getMoreGeoData = async(lat, long) => {
+  try {
+    let res = await fetch(`${api.base}find?lat=${lat}&lon=${long}&units=metric&cnt=4&appid=${api.key}`);
+    let data = await res.json();
+    
+    return(data);
+  }
+  catch (error) {
+    console.error(error);
+  }
 }
 
 const message = document.querySelector(".no-available");
 
-function geo_error() {
-  let show = false;
-
-  if (!show) {
-    message.classList.add("open");
-    show = true;
-  } else {
-    message.classList.remove("open");
-    show = false;
-  }
-
+function geoError(show) {
+  show ? message.classList.add("failed") : message.classList.add("open");
   alert("Sorry, no position available.");
-}
-
-var geo_options = {
-  enableHighAccuracy: true,
-  maximumAge: 30000,
-  timeout: 27000,
 };
 
 function theDate() {
-  let now = new Date();
   let date = document.querySelector(".location .date");
+  let now = new Date();
+  
   date.innerText = dateBuilder(now);
 }
 
 function passingData(weather) {
-  theDate();
   const name = `${weather.name}`;
   const country = `${weather.sys.country}`;
   city.textContent = name + ", " + country;
 
   const { temp, feels_like, humidity, pressure } = weather.main;
-  let temperature = Math.round(temp - 273);
-  let feels = Math.round(feels_like - 273);
 
-  tempA.textContent = temperature;
-  feelsLike.textContent = feels;
-  Humidity.textContent = humidity + " %";
-  Pressure.textContent = pressure + " hpa";
-
-  const { id, description } = weather.weather[0];
-  Description.textContent = description;
-
-  const { icon } = weather.weather[0];
-  locationIcon.innerHTML = `<img src="icons/${icon}.png">`;
-
-  const { speed } = weather.wind;
-  wind.textContent = speed + " mt/s";
-}
-
-function createCards() {
-  for (let i = 0; i < 2; i++) {
-    const elements = document.createElement("div");
-    grid.appendChild(elements);
-  }
-
-  const cards = document.querySelectorAll(".more-cities div");
-  cards.forEach((card) => {
-    card.classList.add("card");
-  });
-}
-
-function cardsTitle(response) {
-  let Allnames = [];
-
-  for (i = 1; i < 3; i++) {
-    const name = `${response.list[i].name}`;
-
-    Allnames.push(name);
-  }
-
-  const cards = document.querySelectorAll(".card");
-
-  for (i = 0; i < 2; i++) {
-    cards[i].innerHTML = Allnames[i] + `<img src="icons/arrow.svg">`;
-  }
-}
-
-let open = false;
-
-function openingInfoCard() {
-  if (!open) {
-    this.classList.add("open");
-    open = true;
-  } else {
-    this.classList.remove("open");
-    open = false;
-  }
-}
-
-function gettingInfo(response) {
-  placingDataContainers();
-
-  let TempInfo = [];
-  let DescriptionInfo = [];
-
-  for (let i = 1; i < 3; i++) {
-    const infT = `${response.list[i].main.temp}`;
-    let temp = Math.round(infT - 273);
-    TempInfo.push(temp);
-
-    const infD = `${response.list[i].weather[0].description}`;
-    DescriptionInfo.push(infD);
-  }
-
-  const Data = document.querySelectorAll(".data");
-
-  for (let j = 0; j < 2; j++) {
-    Data[j].innerHTML = TempInfo[j] + "°C " + DescriptionInfo[j];
-  }
-}
-
-function placingDataContainers() {
-  const cards = document.querySelectorAll(".card");
-  for (let j = 0; j < 1; j++) {
-    for (let i = 0; i < 2; i++) {
-      const elements = document.createElement("div");
-      cards[i].appendChild(elements);
-    }
-  }
-  const info = document.querySelectorAll(".card div");
-  info.forEach((data) => {
-    data.classList.add("data");
-  });
-}
-
-function weatherInCitiesNearU(response) {
-  createCards();
-  cardsTitle(response);
-  const cards = document.querySelectorAll(".card");
-  cards.forEach((card) => card.addEventListener("click", openingInfoCard));
-  gettingInfo(response);
-}
-
-function dateBuilder(d) {
-  let months = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
-  let days = [
-    "Sunday",
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-  ];
-
-  let day = days[d.getDay()];
-  let date = d.getDate();
-  let month = months[d.getMonth()];
-  let year = d.getFullYear();
-
-  return `${day} ${date} ${month} ${year}`;
-}
-
-
-const searchbox = document.querySelector(".search-box")
-
-searchbox.addEventListener("keypress", (evt) => {
-  if (evt.keyCode == 13) {
-    getResults(searchbox.value);
-    message.classList.remove("open");
-    show = false;
-
-    const text = document.querySelector(".more-cities h1")
-    const cardsText = document.querySelectorAll(".card")
-
-    grid.removeChild(text);
-    for(let i = 0; i<2; i++) {
-      grid.removeChild(cardsText[i]);
-    }
-  }
-});
-
-function getResults(query) {
-	fetch(`${api.base}weather?q=${query}&units=metric&appid=${api.key}`)
-		.then((results) => {
-			return results.json();
-		})
-		.then(displayResults);
-}
-
-function displayResults(weather) {
-  theDate()
-  const name = `${weather.name}`;
-  const country = `${weather.sys.country}`;
-  city.textContent = name + ", " + country;
-
-  const { temp, feels_like, humidity, pressure } = weather.main;
-  let temperature = Math.round(temp);
-  let feels = Math.round(feels_like);
-
-  tempA.textContent = temperature;
-  feelsLike.textContent = feels;
+  tempA.textContent = temp;
+  feelsLike.textContent = feels_like;
   Humidity.textContent = humidity + " %";
   Pressure.textContent = pressure + " hpa";
 
@@ -264,6 +92,42 @@ function displayResults(weather) {
 
   const { speed } = weather.wind;
   wind.textContent = speed + " mt/s";
+}
+
+function dateBuilder(d) {
+  let months = [
+    "January", "February", "March", "April", "May", "June", 
+    "July", "August", "September", "October", "November", "December",
+  ];
+  let days = [
+    "Sunday", "Monday", "Tuesday", "Wednesday",
+    "Thursday", "Friday", "Saturday",
+  ];
+
+  let day = days[d.getDay()];
+  let date = d.getDate();
+  let month = months[d.getMonth()];
+  let year = d.getFullYear();
+
+  return `${day} ${date} ${month} ${year}`;
+}
+
+const searchbox = document.querySelector(".search-box")
+
+searchbox.addEventListener('keydown', function(e) {
+  // console.log(e);
+  if(e.code == 'Enter') {
+    // console.log("did it!")
+    getResults(this.value);
+  }
+});
+
+function getResults(query) {
+	fetch(`${api.base}weather?q=${query}&units=metric&appid=${api.key}`)
+		.then((results) => {
+			return results.json();
+		})
+		.then(passingData);
 }
 
 const tempMetric = document.querySelector(".toggle-item")

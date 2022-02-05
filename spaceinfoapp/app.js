@@ -6,8 +6,8 @@ const api = {
 
 const title = document.querySelector(".title")
 const details = document.querySelector(".details")
-
 const menu = document.querySelector(".menu-btn")
+
 menu.addEventListener("click", function() {
     this.classList.toggle('open')
 })
