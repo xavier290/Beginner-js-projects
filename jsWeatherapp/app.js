@@ -5,6 +5,7 @@ const feelsLike = document.querySelector(".feels-like");
 const wind = document.querySelector(".wind");
 const Humidity = document.querySelector(".humidity");
 const Pressure = document.querySelector(".pressure");
+const moreCitiesSection = document.querySelector(".cities");
 
 const api = {
   key: "6dc03e881dc8b962bc1a29daeb884c5b",
@@ -24,11 +25,8 @@ window.addEventListener("load", () => {
 
     geoSuccess(lat, long).then(data => {
       passingData(data);
-
-      getMoreGeoData(lat, long).then(data => {
-          console.log(data);
-      })
     })
+    getMoreGeoData(lat, long);
   }, () => {
     geoError(false);
   })
@@ -51,7 +49,10 @@ const getMoreGeoData = async(lat, long) => {
     let res = await fetch(`${api.base}find?lat=${lat}&lon=${long}&units=metric&cnt=4&appid=${api.key}`);
     let data = await res.json();
     
-    return(data);
+    const fetchResult = weatherMoreCities(data.list);
+    moreCitiesSection.innerHTML = fetchResult;
+
+    dropdownMoreCitiesWeatherInfo();
   }
   catch (error) {
     console.error(error);
@@ -94,6 +95,33 @@ function passingData(weather) {
   wind.textContent = speed + " mt/s";
 }
 
+const weatherMoreCities = (results) => {
+  return results.map(function(result) {
+    console.log(result);
+    return `<article class="card">
+              <h2>${result.name}</h2>
+              <p>${result.main.temp} <span>°C</span></p>
+              <div class="data">
+                <p>feels like: ${result.main.feels_like} <span>°C</span></p>
+                <p>humidity: <span>${result.main.humidity}</span> %</p>
+                <p>pressure: <span>${result.main.pressure}</span> Pa</p>
+                <p>wind: <span>${result.wind.speed}</span> mt/s</p>
+              </div>
+            </article>`;
+    })
+    .join('')
+}
+
+function dropdownMoreCitiesWeatherInfo() {
+  const card = document.querySelectorAll(".card");
+
+  card.forEach((element) => {
+    element.addEventListener('click', () => {
+      element.classList.toggle("open");
+    })
+  });
+};
+
 function dateBuilder(d) {
   let months = [
     "January", "February", "March", "April", "May", "June", 
@@ -117,7 +145,6 @@ const searchbox = document.querySelector(".search-box")
 searchbox.addEventListener('keydown', function(e) {
   // console.log(e);
   if(e.code == 'Enter') {
-    // console.log("did it!")
     getResults(this.value);
   }
 });
@@ -128,53 +155,4 @@ function getResults(query) {
 			return results.json();
 		})
 		.then(passingData);
-}
-
-const tempMetric = document.querySelector(".toggle-item")
-let fahrenheit = false;
-
-tempMetric.addEventListener("click", () => {
-  
-  let value1 = parseInt(tempA.textContent, 10)
-  let value2 = parseInt(feelsLike.textContent, 10)
-
-  if (!fahrenheit) {
-    tempConverterCtoF(value1, value2)
-    changingTempSymbol()
-    fahrenheit = true
-  } else {
-    tempConverterFtoC(value1, value2)
-    changingTempSymbol()
-    fahrenheit = false
-  }
-})
-
-function tempConverterCtoF(valueTemp, feelsvalue) {
-  valueTemp = (valueTemp * 9/5) + 32
-  feelsvalue = (feelsvalue * 9/5) + 32
-  valueTemp.toFixed(2)
-  feelsvalue.toFixed(2)
-  tempA.textContent = valueTemp
-  feelsLike.textContent = feelsvalue
-}
-
-function tempConverterFtoC(valueTemp, feelsvalue) {
-  valueTemp = (valueTemp - 32) * 5/9
-  feelsvalue = (feelsvalue - 32) * 5/9;
-  valueTemp.toFixed(2) 
-  feelsvalue.toFixed(2) 
-  tempA.textContent = valueTemp
-  feelsLike.textContent = feelsvalue
-}
-
-function changingTempSymbol() {
-  const tempSymbol = document.querySelectorAll(".temp-symbol")
-
-  for(let i=0; i<2; i++) {
-    if(tempSymbol[i].textContent == "°C") {
-      tempSymbol[i].textContent = "°F";
-    } else {
-      tempSymbol[i].textContent = "°C"
-    }
-  }
 }

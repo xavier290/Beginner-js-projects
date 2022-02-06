@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,24 +7,13 @@
     <link rel="stylesheet" href="style.css">
     <title>Weather App</title>
 </head>
-
 <body>
-    <section>
-        <header>
-            <input type="text" autocomplete="off" class="search-box" placeholder="Search for a city...">
-            <nav class="menu">
-                <div class="toggle-wrapper">
-                    <div class="toggle normal">
-                      <input id="normal" type="checkbox"/>
-                      <label class="toggle-item" for="normal"></label>
-                    </div>
-                  </div>
-            </nav>
-        </header>
+    <header>
         <div class="title">
             <h1>The <br> weather</h1>
         </div>
-    </section>
+        <input type="text" autocomplete="off" class="search-box" placeholder="Search for a city...">
+    </header>
     <div class="no-available">
         <img src="icons/unknown.png" alt="weather icon">
         <p>something went wrong, looks like we cannot get your current location, try looking for a city</p>
@@ -53,9 +41,9 @@
         </section>
     </main>
     <section class="more-cities">
-        <h1>Cities near You:</h1>
+        <h1>More Cities:</h1>
+        <div class="cities"></div>
     </section>
     <script src="app.js"></script>
 </body>
-
 </html>
